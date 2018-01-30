@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+const fs = require('fs')
+const path = require('path')
+const ospath = require('ospath')
 const repl = require('repl')
 
 const sdk = require('stellar-sdk')
@@ -18,6 +21,19 @@ const serverTest = new sdk.Server(HORIZON_TEST, {allowHttp: false})
 const serverLocal = new sdk.Server(HORIZON_LOCAL, {allowHttp: true})
 
 //
+// Wallets / Keychain Instances
+//
+const persistentWallet = () => {
+  const seedFile = path.join(ospath.data(), 'stellar-repl.seed')
+  if (!fs.existsSync(seedFile))
+    fs.writeFileSync(seedFile, HdWallet.generateMnemonic())
+  const seed = fs.readFileSync(seedFile)
+  return HdWallet.fromMnemonic(seed.toString())
+}
+const walletPersist = persistentWallet()
+const walletSession = HdWallet.fromMnemonic(HdWallet.generateMnemonic())
+
+//
 // Start the REPL!
 //
 const {context} = repl.start('> ')
@@ -27,9 +43,10 @@ const {context} = repl.start('> ')
 //    Keypair, StrKey, xdr, sign
 //    Server, Networks
 //    Transaction, TransactionBuilder
-//    ....
+//    ...
 //
-Object.assign(context, sdk)
+Object.assign(context, sdk) // all sdk exports available on first level
+context.sdk = sdk // make available as 'sdk' also
 
 //
 // Add in server handles, various libraries, aliases.
@@ -56,9 +73,12 @@ Object.assign(context, {
   Directory,
   anchors: Directory.anchors,
   assets: Directory.assets,
+  destinations: Directory.destinations,
+  issuers: Directory.issuers,
+  pairs: Directory.pairs,
 
   //
-  // SEP-0005 HD Wallets
+  // SEP-0005 HD Wallet API
   //
   HdWallet,
   generateMnemonic: HdWallet.generateMnemonic,
@@ -66,10 +86,18 @@ Object.assign(context, {
   fromSeed: HdWallet.fromSeed,
 
   //
+  // SEP-0005 HD Wallet Instances
+  //
+  walletPersist,
+  wp: walletPersist,
+  walletSession,
+  ws: walletSession,
+
+  //
   // QR Code tools
   //
   Qr,
-  wallets: Qr.wallets,
+  qrWallets: Qr.wallets,
   getStellarLink: Qr.getStellarLink,
   getStellarQR: Qr.getStellarQR,
 
