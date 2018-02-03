@@ -7,7 +7,7 @@
   "license": "Apache-2.0",
   "main": "index.js",
   "bin": {
-    "stlr": "node ./index.js"
+    "stlr": "index.js"
   },
   "keywords": [
     "javascript",
