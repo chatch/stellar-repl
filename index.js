@@ -20,6 +20,14 @@ const serverMain = new sdk.Server(HORIZON_MAIN, {allowHttp: false})
 const serverTest = new sdk.Server(HORIZON_TEST, {allowHttp: false})
 const serverLocal = new sdk.Server(HORIZON_LOCAL, {allowHttp: true})
 
+// private network docker container: zulucrypto/stellar-integration-test-network
+sdk.Networks.LOCALZULU = 'Integration Test Network ; zulucrypto'
+
+const useMain = () => sdk.Network.usePublicNetwork()
+const useTest = () => sdk.Network.usePublicNetwork()
+const useLocalZulu = () =>
+  sdk.Network.use(new sdk.Network(sdk.Networks.LOCALZULU))
+
 //
 // Wallets / Keychain Instances
 //
@@ -66,6 +74,10 @@ Object.assign(context, {
   serverLocal,
   l: serverLocal,
   local: serverLocal,
+
+  useMain,
+  useTest,
+  useLocalZulu,
 
   //
   // Stellar Directory (stellarterm-directory)
