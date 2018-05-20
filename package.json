@@ -18,8 +18,8 @@
   ],
   "dependencies": {
     "ospath": "^1.2.2",
-    "stellar-hd-wallet": "0.0.5",
-    "stellar-qr": "0.0.5",
-    "stellar-sdk": "^0.8.0"
+    "stellar-hd-wallet": "^0.0.6",
+    "stellar-qr": "^0.0.5",
+    "stellar-sdk": "^0.8.1"
   }
 }
