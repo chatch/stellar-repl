@@ -5,9 +5,10 @@ const ospath = require('ospath')
 const repl = require('repl')
 
 const sdk = require('stellar-sdk')
-const Directory = require('./stellarterm-directory.json')
 const HdWallet = require('stellar-hd-wallet')
 const Qr = require('stellar-qr')
+
+const Directory = require('./stellarterm-directory.json')
 
 //
 // sdk.Server handles for each network
