@@ -1,6 +1,6 @@
 {
   "name": "stellar-repl",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "REPL for Stellar",
   "author": "Chris Hatch",
   "repository": "chatch/stellar-repl",
@@ -20,6 +20,6 @@
     "ospath": "^1.2.2",
     "stellar-hd-wallet": "0.0.10",
     "stellar-qr": "0.0.5",
-    "stellar-sdk": "^2.0.1"
+    "stellar-sdk": "8.2.3"
   }
 }
